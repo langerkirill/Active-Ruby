@@ -110,7 +110,22 @@ class SQLObject
   end
 
   def update
-    # ...
+    cols = self.class.columns.map do |col|
+      "#{col} = ?"
+    end.compact
+    id = self.id
+    values = attribute_values
+    values = values.drop(1)
+    cols = cols.drop(1)
+    cols = cols.join(', ')
+    DBConnection.execute(<<-SQL, *values)
+      UPDATE
+        #{self.class.table_name}
+      SET
+        #{cols}
+      WHERE
+        id = #{id}
+      SQL
   end
 
   def save
