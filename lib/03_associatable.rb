@@ -10,11 +10,13 @@ class AssocOptions
   )
 
   def model_class
-    # ...
+    const = @class_name.constantize
+    const
   end
 
   def table_name
-    # ...
+    tn = @class_name.downcase + "s"
+    tn
   end
 end
 
