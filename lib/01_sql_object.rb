@@ -1,10 +1,12 @@
 require 'byebug'
 require_relative 'db_connection'
 require 'active_support/inflector'
+# require_relative '02_searchable'
 # NB: the attr_accessor we wrote in phase 0 is NOT used in the rest
 # of this project. It was only a warm up.
 
 class SQLObject
+  # extend Searchable
   def self.columns
     return @syms if @syms
     names = DBConnection.execute2(<<-SQL)
